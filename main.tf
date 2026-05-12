@@ -6,6 +6,8 @@ resource "aws_vpc" "terraform_vpc" {
   }
 }
 
+#public subnets
+
 resource "aws_subnet" "subnet_1" {
 
   vpc_id                  = aws_vpc.terraform_vpc.id
@@ -18,6 +20,7 @@ resource "aws_subnet" "subnet_1" {
   }
 }
 
+#second public subnet in a different availability zone for high availability
 
 resource "aws_subnet" "subnet_2" {
   vpc_id                  = aws_vpc.terraform_vpc.id
@@ -30,6 +33,7 @@ resource "aws_subnet" "subnet_2" {
   }
 }
 
+#internet gateway for the VPC
 
 resource "aws_internet_gateway" "terraform_igw" {
   vpc_id = aws_vpc.terraform_vpc.id
@@ -39,7 +43,7 @@ resource "aws_internet_gateway" "terraform_igw" {
   }
 }
 
-
+#route table for public subnets
 
 resource "aws_route_table" "terraform_route_table" {
   vpc_id = aws_vpc.terraform_vpc.id
@@ -54,6 +58,7 @@ resource "aws_route_table" "terraform_route_table" {
   }
 }
 
+#route table associations for public subnets
 
 resource "aws_route_table_association" "internet_to_public_subnets_2" {
   subnet_id      = aws_subnet.subnet_2.id
@@ -66,3 +71,111 @@ resource "aws_route_table_association" "internet_to_public_subnets_1" {
 }
 
 
+
+
+#security group for ALB and EC2 instances
+
+resource "aws_security_group" "terraform_sg" {
+  name        = "terraform_sg"
+  description = "Allow security to ALB and EC2 instances"
+  vpc_id      = aws_vpc.terraform_vpc.id
+
+  tags = {
+    Name = "terraform_sg"
+  }
+}
+
+#ingress rule to allow HTTP traffic from the VPC CIDR block to the security group
+resource "aws_vpc_security_group_ingress_rule" "allow_http" {
+  security_group_id = aws_security_group.terraform_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  ip_protocol       = "tcp"
+  to_port           = 80
+}
+
+#ingress rule to allow SSH traffic from the VPC CIDR block to the security group
+resource "aws_vpc_security_group_ingress_rule" "allow_ssh" {
+  security_group_id = aws_security_group.terraform_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 22
+  ip_protocol       = "tcp"
+  to_port           = 22
+}
+
+
+
+#egress rule to allow all outbound traffic from the security group to the VPC CIDR block 
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.terraform_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1"
+}
+
+
+
+#s3 original bucket creation
+resource "aws_s3_bucket" "oshan-s3bucket-terraform" {
+  bucket = "oshans3bucketterraform"
+
+  tags = {
+    Name = "oshan-s3bucket-terraform"
+  }
+}
+
+# 2. Turn off  "Block Public Access" security settings
+resource "aws_s3_bucket_public_access_block" "public_access" {
+  bucket = aws_s3_bucket.oshan-s3bucket-terraform.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+# 3. Attach a Bucket Policy to allow public read access
+resource "aws_s3_bucket_policy" "allow_public_read" {
+  bucket = aws_s3_bucket.oshan-s3bucket-terraform.id
+
+  # This tells Terraform to wait until the public access blocks are removed 
+  # before trying to apply this policy, avoiding errors.
+  depends_on = [aws_s3_bucket_public_access_block.public_access]
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Sid       = "PublicReadGetObject"
+        Effect    = "Allow"
+        Principal = "*"
+        Action    = "s3:GetObject"
+        Resource  = "${aws_s3_bucket.oshan-s3bucket-terraform.arn}/*"
+      }
+    ]
+  })
+}
+
+
+resource "aws_instance" "webserver1" {
+  ami                    = "ami-091138d0f0d41ff90"
+  instance_type          = "t3.micro"
+  vpc_security_group_ids = [aws_security_group.terraform_sg.id]
+  subnet_id              = aws_subnet.subnet_1.id
+  user_data              = file("userdata.sh")
+
+  tags = {
+    Name = "webserver1"
+  }
+}
+
+resource "aws_instance" "webserver2" {
+  ami                    = "ami-091138d0f0d41ff90"
+  instance_type          = "t3.micro"
+  vpc_security_group_ids = [aws_security_group.terraform_sg.id]
+  subnet_id              = aws_subnet.subnet_2.id
+  user_data              = file("userdata.sh")
+
+  tags = {
+    Name = "webserver2"
+  }
+}
