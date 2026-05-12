@@ -179,3 +179,76 @@ resource "aws_instance" "webserver2" {
     Name = "webserver2"
   }
 }
+
+#aws_lb for the web servers
+resource "aws_lb" "terraform_alb" {
+  name               = "terraform-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.terraform_sg.id]
+  subnets            = [aws_subnet.subnet_1.id, aws_subnet.subnet_2.id]
+
+  enable_deletion_protection = true
+
+
+
+  tags = {
+    Name = "terraform-alb"
+  }
+}
+
+
+#aws target group for the web servers
+resource "aws_lb_target_group" "terraform_target_group" {
+  name     = "terraform-target-group"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.terraform_vpc.id
+
+  health_check {
+    healthy_threshold   = 2
+    interval            = 30
+    matcher             = "200-299"
+    path                = "/"
+    timeout             = 5
+    unhealthy_threshold = 2
+  }
+
+  tags = {
+    Name = "terraform_target_group"
+  }
+}
+
+
+#attach the web servers1 to the target group
+resource "aws_lb_target_group_attachment" "webserver1_attachment" {
+  target_group_arn = aws_lb_target_group.terraform_target_group.arn
+  target_id        = aws_instance.webserver1.id
+  port             = 80
+}
+
+#attach the web servers2 to the target group
+resource "aws_lb_target_group_attachment" "webserver2_attachment" {
+  target_group_arn = aws_lb_target_group.terraform_target_group.arn
+  target_id        = aws_instance.webserver2.id
+  port             = 80
+}
+
+
+
+#aws_lb_listener for the ALB
+resource "aws_lb_listener" "terraform_listener" {
+  load_balancer_arn = aws_lb.terraform_alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    target_group_arn = aws_lb_target_group.terraform_target_group.arn
+    type             = "forward"
+  }
+}
+
+
+output "loadbalancerdns" {
+  value = aws_lb.terraform_alb.dns_name
+}
