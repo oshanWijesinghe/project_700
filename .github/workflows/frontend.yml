@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'frontend/**' 
+      - 'ecommerce-app/frontend/**'
 
 jobs:
   build-and-deploy-frontend:
