@@ -61,7 +61,7 @@ app.use(notFound);
 app.use(errorHandler);
 
 // ─────────────────────────────────────────────
-// START SERVERsss
+// START SERVERssss
 // ─────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
