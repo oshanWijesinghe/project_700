@@ -31,7 +31,7 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
 
 ### Phase 2: Continuous Integration & Secure Trigger (GitHub Actions)
 1. **Build & Push:** Code changes in `frontend` or `backend` trigger GitHub Actions to build their respective Docker images and push them to Docker Hub securely using stored credentials.
-2. **Secure Execution via Bastion:** The pipeline uses the `appleboy/ssh-action` to securely authenticate into a dedicated **Ansible Control Node (EC2 Bastion Host)**. GitHub Actions never interacts directly with the production servers.
+2. **Secure Execution via Bastion:** The pipeline  securely ssh and authenticate into a dedicated **Ansible Control Node (EC2 Bastion Host)**. GitHub Actions never interacts directly with the production servers.
 
 ### Phase 3: Configuration Management & Orchestration (Ansible)
 1. **Passwordless SSH Authentication:** The Control Node is configured with SSH keys (`ssh-keygen`) injected into the target production EC2 instances (`authorized_keys`), allowing seamless and highly secure passwordless communication.
