@@ -6,6 +6,10 @@ on:
     paths:
       - 'ecommerce-app/frontend/**'
 
+concurrency: 
+  group: production-deploy
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy-frontend:
     runs-on: ubuntu-latest
