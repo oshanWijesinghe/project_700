@@ -1,6 +1,6 @@
 const supabase = require('../config/supabase');
 
-// GET /api/psroducts
+// GET /api/pssroducts
 const getProducts = async (req, res, next) => {
   try {
     const { search, category, min_price, max_price, featured, page = 1, limit = 12 } = req.query;

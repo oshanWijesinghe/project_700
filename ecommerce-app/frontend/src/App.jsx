@@ -59,7 +59,7 @@ export default function App() {
 
   {/* 
        This is a k
-       multi-line comshment kkkkfssss
+       multi-line comshment kkkkfsssss
 
     */}
 
