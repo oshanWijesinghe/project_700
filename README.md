@@ -20,11 +20,12 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
 
 2. **Secure State Management:** The Terraform `.tfstate` is securely stored in an **AWS S3 bucket**, utilizing **DynamoDB for state locking** to prevent race conditions.
 
-3. **High Availability Networking:** Provisions a custom VPC, Internet Gateway, Route Tables, and public subnets across multiple Availability Zones.
+3. ** created infra :** Provisions a custom VPC, Internet Gateway, Route Tables, and public subnets across multiple Availability Zones.
 
 4. **Load Balancing & Compute:** Deploys EC2 instances into the subnets, sitting behind an **Application Load Balancer (ALB)** configured with Target Groups.
    
 
+<img width="712" height="662" alt="terrafrom drawio (1)" src="https://github.com/user-attachments/assets/25d7649a-9003-4171-ad47-d616fdf8fb37" />
 
 
 
