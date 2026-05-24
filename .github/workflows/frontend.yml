@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - 'frontend/**' # Frontend එකේ වෙනසක් වුණොත් පමණක් ක්‍රියාත්මක වේ
+      - 'frontend/**' 
 
 jobs:
   build-and-deploy-frontend:
