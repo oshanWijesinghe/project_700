@@ -16,15 +16,14 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
 
 ### Phase 1: Infrastructure Provisioning (Terraform CI/CD)
 1. **Automated IaC Pipeline:** On pushes to the `main` branch, GitHub Actions triggers the Terraform pipeline (`init`, `validate`, `plan`, and `apply`).
- <img width="1251" height="423" alt="terrafrom setup drawio (1)" src="https://github.com/user-attachments/assets/f852c58f-b4f3-489e-83de-2a36f69cc062" />
+ <img width="1281" height="511" alt="Screenshot 2026-05-24 at 22 39 49" src="https://github.com/user-attachments/assets/8651258a-59bb-47f6-9cf3-c73a6f53142e" />
+
 
 2. **Secure State Management:** The Terraform `.tfstate` is securely stored in an **AWS S3 bucket**, utilizing **DynamoDB for state locking** to prevent race conditions.
 
 3. **Terraform Infrastructure Provisioning:** Architected and deployed a highly available AWS environment featuring a custom VPC, Internet Gateway, Route Tables, and multi-AZ public subnets to host EC2 compute instances managed by an Application Load Balancer (ALB) and Target Groups.
 
-   
-   <img width="639" height="604" alt="Screenshot 2026-05-24 at 21 24 09" src="https://github.com/user-attachments/assets/31f7f963-c8c3-4ff9-91a4-e5a2ef2b831f" />
-
+   <img width="633" height="597" alt="Screenshot 2026-05-24 at 22 40 36" src="https://github.com/user-attachments/assets/be092f82-41e2-415c-a7c8-b543ef5ab8ac" />
 
 
 
@@ -32,6 +31,11 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
 ### Phase 2: Continuous Integration & Secure Trigger (GitHub Actions)
 1. **Build & Push:** Code changes in `frontend` or `backend` trigger GitHub Actions to build their respective Docker images and push them to Docker Hub securely using stored credentials.
 2. **Secure Execution via Bastion:** The pipeline  securely ssh and authenticate into a dedicated **Ansible Control Node (EC2 Bastion Host)**. thenn it execute the asible roles targetg production servers
+
+   <img width="1520" height="753" alt="Screenshot 2026-05-24 at 22 38 52" src="https://github.com/user-attachments/assets/c56ef5ba-b947-444f-9295-0266d94d4090" />
+
+
+
 
 ### Phase 3: Configuration Management & Orchestration (Ansible)
 1. **Passwordless SSH Authentication:** The Control Node is configured with SSH keys (`ssh-keygen`) injected into the target production EC2 instances (`authorized_keys`), allowing seamless and highly secure passwordless communication.
