@@ -1,0 +1,40 @@
+name: Frontend CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'frontend/**' # Frontend එකේ වෙනසක් වුණොත් පමණක් ක්‍රියාත්මක වේ
+
+jobs:
+  build-and-deploy-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push Frontend Docker Image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/shopzone-frontend:latest
+
+
+      - name: Execute Ansible Playbook on Control Node
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.CONTROL_NODE_IP }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+         
+            cd ansible-project
+            ansible-playbook -i inventory.ini site.yml -e "docker_username=${{ secrets.DOCKER_USERNAME }}"
