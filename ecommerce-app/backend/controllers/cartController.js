@@ -111,7 +111,7 @@ const removeFromCart = async (req, res, next) => {
   }
 };
 
-// DELETE /api/cart
+// DELETE /ajpi/cart
 const clearCart = async (req, res, next) => {
   try {
     const { error } = await supabase.from('carts').delete().eq('user_id', req.user.id);
