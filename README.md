@@ -1,4 +1,4 @@
-<img width="1251" height="423" alt="terrafrom setup drawio (1)" src="https://github.com/user-attachments/assets/69b2a6e7-e6d1-4628-ba29-8effd293959d" /># 🚀 Automated Cloud Infrastructure & CI/CD Pipeline for E-Commerce Application
+# 🚀 Automated Cloud Infrastructure & CI/CD Pipeline for E-Commerce Application
 
 ## 📌 Project Overview
 This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commerce application. It features automated Infrastructure as Code (IaC) to provision a highly available AWS environment, paired with a secure, automated CI/CD pipeline. The architecture utilizes a Bastion Host (Control Node) pattern and modular Ansible Roles for zero-downtime, secure containerized deployments.
@@ -19,6 +19,7 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
 2. **Secure State Management:** The Terraform `.tfstate` is securely stored in an **AWS S3 bucket**, utilizing **DynamoDB for state locking** to prevent race conditions.
 3. **High Availability Networking:** Provisions a custom VPC, Internet Gateway, Route Tables, and public subnets across multiple Availability Zones.
 4. **Load Balancing & Compute:** Deploys EC2 instances into the subnets, sitting behind an **Application Load Balancer (ALB)** configured with Target Groups.
+   
 
  <img width="1251" height="423" alt="terrafrom setup drawio (1)" src="https://github.com/user-attachments/assets/f852c58f-b4f3-489e-83de-2a36f69cc062" />
 
