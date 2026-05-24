@@ -48,6 +48,11 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
    * Safely stops and forcefully removes any orphaned, stubborn, or conflicting legacy containers.
    * Frees up required network ports by aggressively stopping default host services (Nginx/Apache).
    * Spins up the new application containers using `docker compose up -d`.
+  
+   <img width="594" height="706" alt="Screenshot 2026-05-24 at 22 47 33" src="https://github.com/user-attachments/assets/9181e868-82bc-45a7-a154-c8dd46b66e50" />
+   <img width="594" height="550" alt="Screenshot 2026-05-24 at 22 47 11" src="https://github.com/user-attachments/assets/87c6ffcc-43c5-4d6a-bfb5-0e8dd2ed1ef5" />
+
+
 
 ## 💡 Key Highlights & Achievements
 * **Enterprise-Grade Infrastructure:** Designed a highly available, load-balanced AWS architecture managed entirely via Terraform with S3/DynamoDB state locking.
