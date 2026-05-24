@@ -22,7 +22,8 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
 
 3. **Terraform Infrastructure Provisioning:** Architected and deployed a highly available AWS environment featuring a custom VPC, Internet Gateway, Route Tables, and multi-AZ public subnets to host EC2 compute instances managed by an Application Load Balancer (ALB) and Target Groups.
    
-<img width="632" height="599" alt="Screenshot 2026-05-24 at 21 16 48" src="https://github.com/user-attachments/assets/4c5aedaf-ab8e-4b06-a550-a4df323bbafb" />
+<img width="757" height="722" alt="Screenshot 2026-05-24 at 21 21 49" src="https://github.com/user-attachments/assets/b1a41c37-f472-416f-a290-d468113a57f6" />
+
 
 
 
