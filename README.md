@@ -10,18 +10,19 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
 * **CI/CD Platforms:** GitHub Actions
 * **Configuration Management:** Ansible (Using Ansible Roles)
 * **Containerization:** Docker, Docker Compose, Docker Hub
-* **Security:** SSH Keygen (Passwordless Login), GitHub Secrets, Strict Security Groups
+
 
 ## 🏗️ Architecture & Workflow
 
 ### Phase 1: Infrastructure Provisioning (Terraform CI/CD)
 1. **Automated IaC Pipeline:** On pushes to the `main` branch, GitHub Actions triggers the Terraform pipeline (`init`, `validate`, `plan`, and `apply`).
+ <img width="1251" height="423" alt="terrafrom setup drawio (1)" src="https://github.com/user-attachments/assets/f852c58f-b4f3-489e-83de-2a36f69cc062" />
 2. **Secure State Management:** The Terraform `.tfstate` is securely stored in an **AWS S3 bucket**, utilizing **DynamoDB for state locking** to prevent race conditions.
 3. **High Availability Networking:** Provisions a custom VPC, Internet Gateway, Route Tables, and public subnets across multiple Availability Zones.
 4. **Load Balancing & Compute:** Deploys EC2 instances into the subnets, sitting behind an **Application Load Balancer (ALB)** configured with Target Groups.
    
 
- <img width="1251" height="423" alt="terrafrom setup drawio (1)" src="https://github.com/user-attachments/assets/f852c58f-b4f3-489e-83de-2a36f69cc062" />
+
 
 
 
