@@ -173,7 +173,7 @@ resource "aws_instance" "webserver2" {
   instance_type          = "t3.micro"
   vpc_security_group_ids = [aws_security_group.terraform_sg.id]
   subnet_id              = aws_subnet.subnet_2.id
-  
+
 
   tags = {
     Name = "webserver2"

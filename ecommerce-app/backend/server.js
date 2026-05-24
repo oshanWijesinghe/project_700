@@ -55,7 +55,7 @@ app.use('/api/cart', cartRouter);
 app.use('/api/orders', orderRouter);
 
 // ─────────────────────────────────────────────
-// ERROR HANDLING
+// ERROR HANDxxLING
 // ─────────────────────────────────────────────
 app.use(notFound);
 app.use(errorHandler);
