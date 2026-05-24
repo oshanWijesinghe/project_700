@@ -161,7 +161,7 @@ resource "aws_instance" "webserver1" {
   instance_type          = "t3.micro"
   vpc_security_group_ids = [aws_security_group.terraform_sg.id]
   subnet_id              = aws_subnet.subnet_1.id
-  user_data              = file("userdata.sh")
+
 
   tags = {
     Name = "webserver1"
@@ -173,7 +173,7 @@ resource "aws_instance" "webserver2" {
   instance_type          = "t3.micro"
   vpc_security_group_ids = [aws_security_group.terraform_sg.id]
   subnet_id              = aws_subnet.subnet_2.id
-  user_data              = file("userdata.sh")
+  
 
   tags = {
     Name = "webserver2"
