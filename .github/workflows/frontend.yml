@@ -23,7 +23,7 @@ jobs:
       - name: Build and Push Frontend Docker Image
         uses: docker/build-push-action@v4
         with:
-          context: ./frontend
+          context: ./ecommerce-app/frontend
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/shopzone-frontend:latest
 
