@@ -49,6 +49,8 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
    * Frees up required network ports by aggressively stopping default host services (Nginx/Apache).
    * Spins up the new application containers using `docker compose up -d`.
   
+
+  
    <img width="594" height="706" alt="Screenshot 2026-05-24 at 22 47 33" src="https://github.com/user-attachments/assets/9181e868-82bc-45a7-a154-c8dd46b66e50" />
    <img width="594" height="550" alt="Screenshot 2026-05-24 at 22 47 11" src="https://github.com/user-attachments/assets/87c6ffcc-43c5-4d6a-bfb5-0e8dd2ed1ef5" />
 
@@ -59,3 +61,17 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
 * **Modular Configuration:** Refactored flat Ansible playbooks into structured **Ansible Roles** for better reusability and maintainability.
 * **Hardened Security:** Implemented a Control Node architecture with passwordless SSH key authentication, ensuring zero direct external access to application servers.
 * **Automated Conflict Resolution:** Engineered the deployment tasks to automatically handle port bindings and forcefully clean up stubborn legacy containers for zero-conflict rollouts.
+
+```text
+📦 shopzone-infrastructure
+ ┣ 📂 terraform/               # AWS Infrastructure as Code
+ ┃ ┣ 📜 main.tf                # EC2, VPC, and Security Group configurations
+ ┃ ┗ 📜 variables.tf           # Terraform variables
+ ┣ 📂 ansible/                 # Configuration Management
+ ┃ ┣ 📂 roles/docker/          # Docker setup and deployment role
+ ┃ ┃ ┣ 📂 tasks/               # main.yml (install docker, copy templates, run compose)
+ ┃ ┃ ┣ 📂 templates/           # docker-compose.yml.j2 (Jinja2 template for dynamic variables)
+ ┃ ┃ ┗ 📂 files/               # Static configuration files
+ ┃ ┣ 📜 inventory.ini          # Target production servers (e.g., 10.0.1.33)
+ ┃ ┗ 📜 site.yml               # Main Ansible playbook
+ ┗ 📜 README.md
