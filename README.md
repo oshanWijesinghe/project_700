@@ -1,4 +1,4 @@
-# 🚀 Automated Cloud Infrastructure & CI/CD Pipeline for E-Commerce Application
+# 🚀 Shopzone Cloud Automation: Terraform pipeline, Ansible & Docker CI/CD Pipeline 
 
 ## 📌 Project Overview
 This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commerce application. It features automated Infrastructure as Code (IaC) to provision a highly available AWS environment, paired with a secure, automated CI/CD pipeline. The architecture utilizes a Bastion Host (Control Node) pattern and modular Ansible Roles for zero-downtime, secure containerized deployments.
@@ -6,7 +6,7 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
 ## 🛠️ Tech Stack & Tools
 * **Infrastructure as Code (IaC):** Terraform
 * **State Management:** AWS S3 (Remote State) & Amazon DynamoDB (State Locking)
-* **Cloud Provider (AWS):** VPC, EC2, Application Load Balancer (ALB), Target Groups, Route Tables, IGW, S3
+* **Cloud Provider (AWS):** VPC, EC2, Application Load Balancer (ALB), Target Groups, Route Tables, IGW, 
 * **CI/CD Platforms:** GitHub Actions
 * **Configuration Management:** Ansible (Using Ansible Roles)
 * **Containerization:** Docker, Docker Compose, Docker Hub
@@ -62,16 +62,3 @@ This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commer
 * **Hardened Security:** Implemented a Control Node architecture with passwordless SSH key authentication, ensuring zero direct external access to application servers.
 * **Automated Conflict Resolution:** Engineered the deployment tasks to automatically handle port bindings and forcefully clean up stubborn legacy containers for zero-conflict rollouts.
 
-```text
-📦 shopzone-infrastructure
- ┣ 📂 terraform/               # AWS Infrastructure as Code
- ┃ ┣ 📜 main.tf                # EC2, VPC, and Security Group configurations
- ┃ ┗ 📜 variables.tf           # Terraform variables
- ┣ 📂 ansible/                 # Configuration Management
- ┃ ┣ 📂 roles/docker/          # Docker setup and deployment role
- ┃ ┃ ┣ 📂 tasks/               # main.yml (install docker, copy templates, run compose)
- ┃ ┃ ┣ 📂 templates/           # docker-compose.yml.j2 (Jinja2 template for dynamic variables)
- ┃ ┃ ┗ 📂 files/               # Static configuration files
- ┃ ┣ 📜 inventory.ini          # Target production servers (e.g., 10.0.1.33)
- ┃ ┗ 📜 site.yml               # Main Ansible playbook
- ┗ 📜 README.md
