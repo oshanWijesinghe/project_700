@@ -1,7 +1,7 @@
-# 🚀 Shopzone Cloud Automation: Terraform pipeline, Ansible & Docker CI/CD Pipeline 
+# 🚀 Shopzone Cloud Automation: Terraform Iac, Ansible & Docker CI/CD Pipeline 
 
 ## 📌 Project Overview
-This project demonstrates a complete end-to-end DevOps lifecycle for an E-Commerce application. It features automated Infrastructure as Code (IaC) to provision a highly available AWS environment, paired with a secure, automated CI/CD pipeline. The architecture utilizes a Bastion Host (Control Node) pattern and modular Ansible Roles for zero-downtime, secure containerized deployments.
+Shopzone is a modern web application deployed using a fully automated, end-to-end DevOps pipeline. This project demonstrates the practical integration of Infrastructure as Code (IaC), configuration management, and containerized deployment.
 
 ## 🛠️ Tech Stack & Tools
 * **Infrastructure as Code (IaC):** Terraform
