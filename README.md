@@ -3,6 +3,7 @@
 ## 📌 Project Overview
 Shopzone is a modern web application deployed using a fully automated, end-to-end DevOps pipeline. This project demonstrates the practical integration of Infrastructure as Code (IaC), configuration management, and containerized deployment.
 
+---
 ## 🛠️ Tech Stack & Tools
 * **Infrastructure as Code (IaC):** Terraform
 * **State Management:** AWS S3 (Remote State) & Amazon DynamoDB (State Locking)
@@ -10,6 +11,7 @@ Shopzone is a modern web application deployed using a fully automated, end-to-en
 * **CI/CD Platforms:** GitHub Actions
 * **Configuration Management:** Ansible (Using Ansible Roles)
 * **Containerization:** Docker, Docker Compose, Docker Hub
+---
 
 
 ## 🏗️ Architecture & Workflow
@@ -25,17 +27,17 @@ Shopzone is a modern web application deployed using a fully automated, end-to-en
 
    <img width="633" height="597" alt="Screenshot 2026-05-24 at 22 40 36" src="https://github.com/user-attachments/assets/be092f82-41e2-415c-a7c8-b543ef5ab8ac" />
 
-
+---
 
 
 ### Phase 2: Continuous Integration & Secure Trigger (GitHub Actions)
 1. **Build & Push:** Code changes in `frontend` or `backend` trigger GitHub Actions to build their respective Docker images and push them to Docker Hub securely using stored credentials.
 2. **Secure Execution via Bastion:** The pipeline  securely ssh and authenticate into a dedicated **Ansible Control Node (EC2 Bastion Host)**. thenn it execute the asible roles targetg production servers
 
-   <img width="1520" height="753" alt="Screenshot 2026-05-24 at 22 38 52" src="https://github.com/user-attachments/assets/c56ef5ba-b947-444f-9295-0266d94d4090" />
+<img width="1680" height="1050" alt="Screenshot 2026-05-25 at 22 46 07" src="https://github.com/user-attachments/assets/5b2e087b-fb53-49f9-bd97-f9c86831ce7b" />
 
 
-
+---
 
 ### Phase 3: Configuration Management & Orchestration (Ansible)
 1. **Passwordless SSH Authentication:** The Control Node is configured with SSH keys (`ssh-keygen`) injected into the target production EC2 instances (`authorized_keys`), allowing seamless and highly secure passwordless communication.
@@ -54,7 +56,8 @@ Shopzone is a modern web application deployed using a fully automated, end-to-en
    <img width="594" height="706" alt="Screenshot 2026-05-24 at 22 47 33" src="https://github.com/user-attachments/assets/9181e868-82bc-45a7-a154-c8dd46b66e50" />
    <img width="594" height="550" alt="Screenshot 2026-05-24 at 22 47 11" src="https://github.com/user-attachments/assets/87c6ffcc-43c5-4d6a-bfb5-0e8dd2ed1ef5" />
 
-
+---
+---
 
 ## 💡 Key Highlights & Achievements
 * **Enterprise-Grade Infrastructure:** Designed a highly available, load-balanced AWS architecture managed entirely via Terraform with S3/DynamoDB state locking.
