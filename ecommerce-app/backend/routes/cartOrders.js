@@ -13,7 +13,7 @@ cartRouter.put('/:id', updateCartItem);
 cartRouter.delete('/clear', clearCart);
 cartRouter.delete('/:id', removeFromCart);
  
-// All order routes requirdsde authentication
+// All order routes requirdsdse authentication
 orderRouter.use(authenticate);
 orderRouter.get('/', getOrders);
 orderRouter.get('/:id', getOrder);
