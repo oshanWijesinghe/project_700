@@ -77,7 +77,6 @@ resource "aws_route_table_association" "internet_to_public_subnets_1" {
 #security group for ALB and EC2 instances
 
 resource "aws_security_group" "terraform_sg" {
-  name        = "terraform_sg"
   description = "Allow security to ALB and EC2 instances"
   vpc_id      = aws_vpc.terraform_vpc.id
 
@@ -90,9 +89,10 @@ resource "aws_security_group" "terraform_sg" {
 resource "aws_vpc_security_group_ingress_rule" "allow_http" {
   security_group_id = aws_security_group.terraform_sg.id
   cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 80
-  ip_protocol       = "tcp"
-  to_port           = 80
+  #port rage
+  from_port   = 80
+  ip_protocol = "tcp"
+  to_port     = 80
 }
 
 #ingress rule to allow SSH traffic from the VPC CIDR block to the security group
