@@ -6,8 +6,7 @@ resource "aws_vpc" "terraform_vpc" {
   }
 }
 
-#public subnets
-
+# 2 public subnets in different availability zones
 resource "aws_subnet" "subnet_1" {
 
   vpc_id                  = aws_vpc.terraform_vpc.id
@@ -20,8 +19,6 @@ resource "aws_subnet" "subnet_1" {
   }
 }
 
-#second public subnet in a different availability zone for high availability
-
 resource "aws_subnet" "subnet_2" {
   vpc_id                  = aws_vpc.terraform_vpc.id
   cidr_block              = var.subnet_2_cidr
@@ -33,8 +30,9 @@ resource "aws_subnet" "subnet_2" {
   }
 }
 
-#internet gateway for the VPC
 
+
+#internet gateway for the VPC
 resource "aws_internet_gateway" "terraform_igw" {
   vpc_id = aws_vpc.terraform_vpc.id
 
@@ -43,11 +41,12 @@ resource "aws_internet_gateway" "terraform_igw" {
   }
 }
 
-#route table for public subnets
 
+#route table for public subnets
 resource "aws_route_table" "terraform_route_table" {
   vpc_id = aws_vpc.terraform_vpc.id
 
+  #where  to send traffic  ,how to send traffic
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.terraform_igw.id
@@ -63,6 +62,8 @@ resource "aws_route_table" "terraform_route_table" {
 resource "aws_route_table_association" "internet_to_public_subnets_2" {
   subnet_id      = aws_subnet.subnet_2.id
   route_table_id = aws_route_table.terraform_route_table.id
+
+
 }
 
 resource "aws_route_table_association" "internet_to_public_subnets_1" {
@@ -114,46 +115,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
 
 
 
-#s3 original bucket creation
-resource "aws_s3_bucket" "oshan-s3bucket-terraform" {
-  bucket = "oshans3bucketterraform"
 
-  tags = {
-    Name = "oshan-s3bucket-terraform"
-  }
-}
-
-# 2. Turn off  "Block Public Access" security settings
-resource "aws_s3_bucket_public_access_block" "public_access" {
-  bucket = aws_s3_bucket.oshan-s3bucket-terraform.id
-
-  block_public_acls       = false
-  block_public_policy     = false
-  ignore_public_acls      = false
-  restrict_public_buckets = false
-}
-
-# 3. Attach a Bucket Policy to allow public read access
-resource "aws_s3_bucket_policy" "allow_public_read" {
-  bucket = aws_s3_bucket.oshan-s3bucket-terraform.id
-
-  # This tells Terraform to wait until the public access blocks are removed 
-  # before trying to apply this policy, avoiding errors.
-  depends_on = [aws_s3_bucket_public_access_block.public_access]
-
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Sid       = "PublicReadGetObject"
-        Effect    = "Allow"
-        Principal = "*"
-        Action    = "s3:GetObject"
-        Resource  = "${aws_s3_bucket.oshan-s3bucket-terraform.arn}/*"
-      }
-    ]
-  })
-}
 
 
 resource "aws_instance" "webserver1" {
