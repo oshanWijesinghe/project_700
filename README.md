@@ -47,7 +47,6 @@ Shopzone is a modern web application deployed using a fully automated, end-to-en
    * Creates application directories and sets proper ownership.
    * Injects environment variables and dynamically templates the `docker-compose.yml` file (`.j2`).
    * Pulls the latest Docker images from Docker Hub.
-   * Safely stops and forcefully removes any orphaned, stubborn, or conflicting legacy containers.
    * Frees up required network ports by aggressively stopping default host services (Nginx/Apache).
    * Spins up the new application containers using `docker compose up -d`.
   
