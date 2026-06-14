@@ -39,6 +39,7 @@ jobs:
           username: ubuntu
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-         
             cd ansible-project
-            ansible-playbook -i inventory.ini site.yml -e "docker_username=${{ secrets.DOCKER_USERNAME }}"
+            echo "${{ secrets.VAULT_PASSWORD }}" > .vault_pass.txt
+            ansible-playbook -i inventory.ini site.yml -e "docker_username=${{ secrets.DOCKER_USERNAME }}" --vault-password-file .vault_pass.txt
+            rm .vault_pass.txt
