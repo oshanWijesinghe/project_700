@@ -32,7 +32,7 @@ Shopzone is a modern web application deployed using a fully automated, end-to-en
 
 ### Phase 2: Continuous Integration & Secure Trigger (GitHub Actions)
 1. **Build & Push:** Code changes in `frontend` or `backend` trigger GitHub Actions to build their respective Docker images and push them to Docker Hub securely using stored credentials.
-2. **Secure Execution via Bastion:** The pipeline  securely ssh and authenticate into a dedicated **Ansible Control Node (EC2 Bastion Host)**. thenn it execute the asible roles targetg production servers
+2. **Secure Execution via Bastion:** The pipeline  securely ssh and authenticate into a dedicated **Ansible Control Node )**. thenn it execute the asible roles targetg production servers
 
 <img width="1680" height="1050" alt="Screenshot 2026-05-25 at 22 46 07" src="https://github.com/user-attachments/assets/5b2e087b-fb53-49f9-bd97-f9c86831ce7b" />
 
@@ -41,27 +41,22 @@ Shopzone is a modern web application deployed using a fully automated, end-to-en
 
 ### Phase 3: Configuration Management & Orchestration (Ansible)
 1. **Passwordless SSH Authentication:** The Control Node is configured with SSH keys (`ssh-keygen`) injected into the target production EC2 instances (`authorized_keys`), allowing seamless and highly secure passwordless communication.
-2. **Modular Ansible Roles:** The deployment logic is structured using **Ansible Roles** (e.g., a dedicated `docker` role containing `tasks`, `templates`, `vars`, etc.) to ensure modularity, scalability, and clean code.
+2. **Modular Ansible Roles:** The deployment logic is structured using **Ansible Roles**  
 3. **Task Execution (`main.yml`):** The Ansible playbook dynamically executes the following on target nodes:
    * Installs and configures Docker and Docker Compose.
    * Creates application directories and sets proper ownership.
    * Injects environment variables and dynamically templates the `docker-compose.yml` file (`.j2`).
    * Pulls the latest Docker images from Docker Hub.
-   * Safely stops and forcefully removes any orphaned, stubborn, or conflicting legacy containers.
-   * Frees up required network ports by aggressively stopping default host services (Nginx/Apache).
+   * Safely stops and forcefully removes any orphaned, conflicting legacy containers.
+   
    * Spins up the new application containers using `docker compose up -d`.
   
 
   
-   <img width="594" height="706" alt="Screenshot 2026-05-24 at 22 47 33" src="https://github.com/user-attachments/assets/9181e868-82bc-45a7-a154-c8dd46b66e50" />
-   <img width="594" height="550" alt="Screenshot 2026-05-24 at 22 47 11" src="https://github.com/user-attachments/assets/87c6ffcc-43c5-4d6a-bfb5-0e8dd2ed1ef5" />
+   ![alt text](<image/Screenshot 2026-06-12 at 16.11.05.png>)
+   ![alt text](<image/Screenshot 2026-06-12 at 16.11.25.png>)
 
 ---
 ---
 
-## 💡 Key Highlights & Achievements
-* **Enterprise-Grade Infrastructure:** Designed a highly available, load-balanced AWS architecture managed entirely via Terraform with S3/DynamoDB state locking.
-* **Modular Configuration:** Refactored flat Ansible playbooks into structured **Ansible Roles** for better reusability and maintainability.
-* **Hardened Security:** Implemented a Control Node architecture with passwordless SSH key authentication, ensuring zero direct external access to application servers.
-* **Automated Conflict Resolution:** Engineered the deployment tasks to automatically handle port bindings and forcefully clean up stubborn legacy containers for zero-conflict rollouts.
 
